@@ -205,6 +205,10 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()  # Cargar variables de ambiente desde .env
+# Justo antes de client.run(), agrega:
+token = os.getenv('DISCORD_TOKEN')
+print(f"Token encontrado: {token[:20]}..." if token else "⚠️ NO SE ENCONTRÓ EL TOKEN")
+client.run(token)
 
 # Usar variable de ambiente para el token
 client.run(os.getenv('DISCORD_TOKEN'))
