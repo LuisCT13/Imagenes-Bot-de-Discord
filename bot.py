@@ -47,7 +47,7 @@ CANCIONES = {
         }
     ],
     'humbe': [
-        {
+        {   
             'titulo': 'Fantasmas',
             'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/fantasmas.jpg',  # Reemplaza con tu imagen
             'descripcion': ''
@@ -129,7 +129,7 @@ async def on_message(msg):
     if msg.mentions:
         for member in msg.mentions:
             if member.name.lower() == TARGET_USER_NAME.lower():
-                await msg.reply("Toy viendo pelis :D, como a las 10pm entro.")
+                await msg.reply("Toy valiendo verga :D, como a las 6 entro.")
 
     # Comando para mostrar canciones favoritas
     if msg.content.startswith("!artistas"):
