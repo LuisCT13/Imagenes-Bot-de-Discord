@@ -201,4 +201,11 @@ async def on_message(msg):
         await msg.reply(f"✅ Rol de administrador asignado a {target_member.mention}.")
 
 # Iniciar el bot
-client.run('MTMyNTIxNTc0MzUyODE0MDg0Mg.G8qoop.nyfOcfahzjOABsvrH8z1UNoleJE9kGbHahH4YE')
+# Iniciar el bot
+import os
+from dotenv import load_dotenv
+
+load_dotenv()  # Cargar variables de ambiente desde .env
+
+# Usar variable de ambiente para el token
+client.run(os.getenv('DISCORD_TOKEN'))
