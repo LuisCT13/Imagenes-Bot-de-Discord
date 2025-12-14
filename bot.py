@@ -201,7 +201,6 @@ async def on_message(msg):
         await msg.reply(f"✅ Rol de administrador asignado a {target_member.mention}.")
 
 # Iniciar el bot
-# Iniciar el bot
 import os
 from dotenv import load_dotenv
 
