@@ -13,63 +13,58 @@ TARGET_USER_NAME = "luistamalero"
 client = discord.Client(intents=intents)
 
 # Datos de canciones con imágenes
-# INSTRUCCIONES: Reemplaza las URLs con tus propias imágenes
-# Opción 1: Sube a Discord → clic derecho → copiar enlace
-# Opción 2: Sube a Imgur.com → copia el enlace directo
-# Opción 3: Usa imágenes de Spotify/YouTube directamente
-
 CANCIONES = {
     'the_warning': [
         {
             'titulo': 'Disciple',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/disciple.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/disciple.jpg',
             'descripcion': 'Cancionsota con riffs intensos'
         },
         {
             'titulo': 'Enter Sandman (Cover)',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/enter.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/enter.jpg',
             'descripcion': 'Su cover de Metallica'
         },
         {
             'titulo': 'Automatic Sun',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/sun.gif',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/sun.gif',
             'descripcion': 'When estas tan drogado que haces automático el sol'
         },
         {
             'titulo': 'Queen of the Murder Scene',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/queen.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/queen.jpg',
             'descripcion': 'Cuchillitos Cuchullitos'
         },
         {
             'titulo': 'Amour',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/amour.gif',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/TheWarning/amour.gif',
             'descripcion': 'Sangra por mí'
         }
     ],
     'humbe': [
         {   
             'titulo': 'Fantasmas',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/fantasmas.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/fantasmas.jpg',
             'descripcion': ''
         },
         {
             'titulo': 'Astros',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/astros.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/astros.jpg',
             'descripcion': ''
         },
         {
             'titulo': 'Patadas de Ahogado',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/patadas.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/patadas.jpg',
             'descripcion': 'Hueles a vainilla, te quiero <3'
         },
         {
             'titulo': 'Sábanas',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/sabanas.png',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/sabanas.png',
             'descripcion': '¿Y si aún no estoy listo para amar?'
         },
         {
             'titulo': 'REM',
-            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/rem.jpg',  # Reemplaza con tu imagen
+            'imagen': 'https://raw.githubusercontent.com/LuisCT13/Imagenes-Bot-de-Discord/main/Humbe/rem.jpg',
             'descripcion': 'Aún te veo en mis sueños'
         }
     ]
@@ -125,11 +120,17 @@ async def on_message(msg):
     if msg.author == client.user:
         return
 
-    # Verificar si el mensaje menciona a alguien
-    if msg.mentions:
+    # Verificar SOLO si el mensaje menciona DIRECTAMENTE a luistamalero con @
+    # Ignorar menciones automáticas por respuestas a mensajes
+    # Y SOLO si el autor del mensaje NO es luistamalero
+    if msg.author.name.lower() != TARGET_USER_NAME.lower():
+        # Verificar que la mención esté en el contenido del mensaje (mención explícita)
         for member in msg.mentions:
             if member.name.lower() == TARGET_USER_NAME.lower():
-                await msg.reply("Toy valiendo verga :D, como a las 6 entro.")
+                # Verificar que realmente lo mencionó con @ en el texto
+                if f'<@{member.id}>' in msg.content or f'<@!{member.id}>' in msg.content:
+                    await msg.reply("Toy valiendo verga :D, como a las 6 entro.")
+                    break  # Solo responder una vez
 
     # Comando para mostrar canciones favoritas
     if msg.content.startswith("!artistas"):
@@ -205,10 +206,6 @@ import os
 from dotenv import load_dotenv
 
 load_dotenv()  # Cargar variables de ambiente desde .env
-# Justo antes de client.run(), agrega:
 token = os.getenv('DISCORD_TOKEN')
 print(f"Token encontrado: {token[:20]}..." if token else "⚠️ NO SE ENCONTRÓ EL TOKEN")
 client.run(token)
-
-# Usar variable de ambiente para el token
-client.run(os.getenv('DISCORD_TOKEN'))
